@@ -19,14 +19,13 @@ $(document).ready(function() {
     });
   });
   $('#showDinoResult').click(function() {
+    $('.showDinoList').text("");
     let dinoPara = $('#dinoPara').val();
     let dinoWords = $('#dinoWords').val();
-console.log(dinoPara + " and now dinoWords: " + dinoWords)
     $.get(`http://dinoipsum.herokuapp.com/api?format=json&paragraphs=${dinoPara}&words=${dinoWords}`).then(function(response) {
-      let dinoString = `${response}`;
-      let dinoArray = dinoString.split(",");
-      dinoArray.forEach(function(element) {
-        $('.showDinoList').append(`<li>${element}</li>`);
+      response.forEach(function(element) {
+        let newElement = element.join(", ")
+        $('.showDinoList').append(`<h6>${newElement}</h6><br>`);
       });
     }).fail(function(error) {
         $('.showDinoError').text(`${error.responseText}`);
